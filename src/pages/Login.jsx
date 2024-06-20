@@ -1,9 +1,38 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { clearAllUserErrors, login } from "@/store/slices/userSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loading, isAuthenticated, error } = useSelector(
+    (state) => state.user
+  );
+
+  const dispatch = useDispatch();
+  const navigateTo = useNavigate();
+
+  const handleLogin = () => {
+    dispatch(login(email, password));
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearAllUserErrors());
+    }
+
+    if (isAuthenticated) {
+      navigateTo("/");
+    }
+  }, [dispatch, isAuthenticated, error, loading]);
+
   return (
     <div className="w-full lg:grid lg:min-h-[100vh] lg:grid-cols-2 xl:min-h-[100vh]">
       <div className="min-h-[100vh] flex items-center justify-center py-12 px-2">
@@ -21,6 +50,8 @@ const Login = () => {
                 id="email"
                 type="email"
                 placeholder="m@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -34,9 +65,15 @@ const Login = () => {
                   Forgot your password?
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" onClick={handleLogin}>
               Login
             </Button>
             <Button variant="outline" className="w-full">
