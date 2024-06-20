@@ -8,10 +8,19 @@ import ManageTimelines from "./pages/ManageTimelines";
 import ManageProjects from "./pages/ManageProjects";
 import ViewProject from "./pages/ViewProject";
 import UpdateProject from "./pages/UpdateProject";
+import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { getUser } from "./store/slices/userSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
     <Router>
       <Routes>
