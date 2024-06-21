@@ -1,3 +1,4 @@
+import LoadingButton from "@/components/sub-components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -73,9 +74,13 @@ const Login = () => {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" onClick={handleLogin}>
-              Login
-            </Button>
+            {loading ? (
+              <LoadingButton content={"Logging..."} />
+            ) : (
+              <Button type="submit" className="w-full" onClick={handleLogin}>
+                Login
+              </Button>
+            )}
             <Button variant="outline" className="w-full">
               Login with Google
             </Button>
