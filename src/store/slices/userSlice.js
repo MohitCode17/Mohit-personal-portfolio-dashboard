@@ -49,6 +49,19 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
       state.error = action.payload;
     },
+    logoutSuccess(state, action) {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = {};
+      state.error = null;
+      state.message = action.payload;
+    },
+    logoutFailed(state, action) {
+      state.loading = false;
+      state.isAuthenticated = state.isAuthenticated;
+      state.user = state.user;
+      state.error = action.payload;
+    },
     clearAllErrors(state, action) {
       state.error = null;
       state = state.user;
@@ -56,6 +69,7 @@ const userSlice = createSlice({
   },
 });
 
+// LOGIN REQUEST
 export const login = (email, password) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
@@ -75,6 +89,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+// GET USER PROFILE REQUEST
 export const getUser = () => async (dispatch) => {
   dispatch(userSlice.actions.getUserRequest());
   try {
@@ -85,6 +100,20 @@ export const getUser = () => async (dispatch) => {
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(userSlice.actions.getUserFailed(error.response.data.message));
+  }
+};
+
+// LOGOUT USER REQUEST
+export const logout = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      "http://localhost:8000/api/v1/user/logout",
+      { withCredentials: true }
+    );
+    dispatch(userSlice.actions.logoutSuccess(data.message));
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
   }
 };
 
