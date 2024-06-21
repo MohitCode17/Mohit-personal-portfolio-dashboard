@@ -62,6 +62,47 @@ const userSlice = createSlice({
       state.user = state.user;
       state.error = action.payload;
     },
+    updateProfileRequest(state, action) {
+      state.loading = true;
+      state.isUpdated = false;
+      state.message = null;
+      state.error = null;
+    },
+    updateProfileSuccess(state, action) {
+      state.loading = false;
+      state.isUpdated = true;
+      state.message = action.payload;
+      state.error = null;
+    },
+    updateProfileFailed(state, action) {
+      state.loading = false;
+      state.isUpdated = false;
+      state.message = null;
+      state.error = action.payload;
+    },
+    updatePasswordRequest(state, action) {
+      state.loading = true;
+      state.isUpdated = false;
+      state.message = null;
+      state.error = null;
+    },
+    updatePasswordSuccess(state, action) {
+      state.loading = false;
+      state.isUpdated = true;
+      state.message = action.payload;
+      state.error = null;
+    },
+    updatePasswordFailed(state, action) {
+      state.loading = false;
+      state.isUpdated = false;
+      state.message = null;
+      state.error = action.payload;
+    },
+    profileResetAfterUpdate(state, action) {
+      state.error = null;
+      state.isUpdated = false;
+      state.message = null;
+    },
     clearAllErrors(state, action) {
       state.error = null;
       state = state.user;
@@ -115,6 +156,59 @@ export const logout = () => async (dispatch) => {
   } catch (error) {
     dispatch(userSlice.actions.logoutFailed(error.response.data.message));
   }
+};
+
+// UPDATE PROFILE REQUEST
+export const updateProfile = (updatedData) => async (dispatch) => {
+  dispatch(userSlice.actions.updateProfileRequest());
+
+  try {
+    const { data } = await axios.put(
+      "http://localhost:8000/api/v1/user/me/profile/update",
+      updatedData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    dispatch(userSlice.actions.updateProfileSuccess(data.message));
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(
+      userSlice.actions.updateProfileFailed(error.response.data.message)
+    );
+  }
+};
+
+// UPDATE PASSWORD REQUEST
+export const updatePassword =
+  (currentPassword, newPassword, confirmPassword) => async (dispatch) => {
+    dispatch(userSlice.actions.updatePasswordRequest());
+
+    try {
+      const { data } = await axios.put(
+        "http://localhost:8000/api/v1/user/password/update",
+        { currentPassword, newPassword, confirmPassword },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch(userSlice.actions.updatePasswordSuccess(data.message));
+      dispatch(userSlice.actions.clearAllErrors());
+    } catch (error) {
+      dispatch(
+        userSlice.actions.updatePasswordFailed(error.response.data.message)
+      );
+    }
+  };
+
+export const resetProfile = () => (dispatch) => {
+  dispatch(userSlice.actions.profileResetAfterUpdate());
 };
 
 export const clearAllUserErrors = () => (dispatch) => {
