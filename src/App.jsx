@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { getUser } from "./store/slices/userSlice";
+import "./App.css";
 
 const App = () => {
   const dispatch = useDispatch();

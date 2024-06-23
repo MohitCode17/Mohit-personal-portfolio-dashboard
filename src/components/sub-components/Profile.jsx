@@ -6,7 +6,6 @@ import { Textarea } from "../ui/textarea";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
 
   return (
     <>
@@ -34,7 +33,7 @@ const Profile = () => {
                   >
                     <img
                       src={user && user.resume && user.resume.url}
-                      alt="avatar"
+                      alt="resume"
                       className="w-full h-auto sm:w-72 sm:h-72 rounded-2xl object-cover object-top"
                     />
                   </Link>
