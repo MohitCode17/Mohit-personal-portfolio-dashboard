@@ -14,12 +14,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { getUser } from "./store/slices/userSlice";
 import "./App.css";
+import { getAllMessages } from "./store/slices/messageSlice";
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getAllMessages())
   }, []);
 
   return (
