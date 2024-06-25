@@ -56,11 +56,6 @@ const timelineSlice = createSlice({
       state.error = action.payload;
       state.message = null;
     },
-    addNewTimelineFailed(state, action) {
-      state.loading = false;
-      state.error = action.payload;
-      state.message = null;
-    },
     resetTimelineSlice(state, action) {
       state.error = null;
       state.timeline = state.timeline;

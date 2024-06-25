@@ -26,8 +26,6 @@ const Messages = () => {
     (state) => state.messages
   );
 
-  console.log(messages);
-
   const dispatch = useDispatch();
 
   const handleDeleteMessage = (id) => {
