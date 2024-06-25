@@ -15,13 +15,15 @@ import { useEffect } from "react";
 import { getUser } from "./store/slices/userSlice";
 import "./App.css";
 import { getAllMessages } from "./store/slices/messageSlice";
+import { getAllTimelines } from "./store/slices/timelineSlice";
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser());
-    dispatch(getAllMessages())
+    dispatch(getAllMessages());
+    dispatch(getAllTimelines());
   }, []);
 
   return (
