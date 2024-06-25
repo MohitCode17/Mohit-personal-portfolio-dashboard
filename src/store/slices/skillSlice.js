@@ -72,13 +72,13 @@ const skillSlice = createSlice({
     },
     resetSkillSlice(state, action) {
       state.error = null;
-      state.skills = state.timeline;
+      state.skills = state.skills;
       state.message = null;
       state.loading = false;
     },
     clearAllErrors(state, action) {
       state.error = null;
-      state.timeline = state.timeline;
+      state.skills = state.skills;
     },
   },
 });
