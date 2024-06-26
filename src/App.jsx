@@ -17,6 +17,7 @@ import "./App.css";
 import { getAllMessages } from "./store/slices/messageSlice";
 import { getAllTimelines } from "./store/slices/timelineSlice";
 import { getAllSkills } from "./store/slices/skillSlice";
+import { getAllSoftwares } from "./store/slices/softwareSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const App = () => {
     dispatch(getAllMessages());
     dispatch(getAllTimelines());
     dispatch(getAllSkills());
+    dispatch(getAllSoftwares());
   }, []);
 
   return (

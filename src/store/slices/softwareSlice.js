@@ -99,7 +99,6 @@ export const deleteSoftware = (id) => async (dispatch) => {
 
     console.log(data);
     dispatch(softwareSlice.actions.deleteSoftwareSuccess(data.message));
-
     dispatch(softwareSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
@@ -123,8 +122,6 @@ export const addNewSoftware = (softwareData) => async (dispatch) => {
         },
       }
     );
-
-    console.log(data);
     dispatch(softwareSlice.actions.addNewSoftwareSuccess(data.message));
     dispatch(softwareSlice.actions.clearAllErrors());
   } catch (error) {
@@ -140,7 +137,7 @@ export const resetSoftwareSlice = () => (dispatch) => {
 };
 
 // CLEAR ALL ERRORS
-export const clearAllSkillErrors = () => (dispatch) => {
+export const clearAllSoftwareErrors = () => (dispatch) => {
   dispatch(softwareSlice.actions.clearAllErrors());
 };
 
