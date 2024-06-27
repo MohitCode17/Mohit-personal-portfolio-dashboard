@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardContent,
@@ -19,13 +19,49 @@ import {
 } from "../ui/table";
 import { Progress } from "../ui/progress";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  clearAllSoftwareErrors,
+  deleteSoftware,
+  getAllSoftwares,
+  resetSoftwareSlice,
+} from "@/store/slices/softwareSlice";
+import LoadingButton from "./LoadingButton";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.user);
   const { projects } = useSelector((state) => state.project);
   const { skills } = useSelector((state) => state.skill);
-  const { softwares } = useSelector((state) => state.software);
+  const {
+    softwares,
+    loading: softwareLoading,
+    error: softwareError,
+    message: softwareMessage,
+  } = useSelector((state) => state.software);
   const { timeline } = useSelector((state) => state.timeline);
+  const dispatch = useDispatch();
+  const [softwareId, setSoftwareId] = useState(null);
+
+  // HANDLE DELETE SOFTWARE
+  const handleDeleteSoftware = (id) => {
+    setSoftwareId(id);
+    dispatch(deleteSoftware(id));
+  };
+
+  useEffect(() => {
+    if (softwareError) {
+      toast.error(softwareError);
+      dispatch(clearAllSoftwareErrors());
+    }
+
+    if (softwareMessage) {
+      toast.success(softwareMessage);
+      setSoftwareId(null);
+      dispatch(resetSoftwareSlice());
+      dispatch(getAllSoftwares());
+    }
+  }, [dispatch, softwareLoading, softwareError, softwareMessage]);
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -193,7 +229,20 @@ const Dashboard = () => {
                             </TableCell>
 
                             <TableCell className="md:table-cell text-right">
-                              <Button>Delete</Button>
+                              {softwareLoading && softwareId === element._id ? (
+                                <LoadingButton
+                                  width={"w-fit"}
+                                  content={"Deleting"}
+                                />
+                              ) : (
+                                <Button
+                                  onClick={() =>
+                                    handleDeleteSoftware(element._id)
+                                  }
+                                >
+                                  Delete
+                                </Button>
+                              )}
                             </TableCell>
                           </TableRow>
                         ))
@@ -239,7 +288,9 @@ const Dashboard = () => {
                             </TableCell>
 
                             <TableCell className="md:table-cell text-right">
-                              {element.timeline.to ? `${element.timeline.to}` : "Present" }
+                              {element.timeline.to
+                                ? `${element.timeline.to}`
+                                : "Present"}
                             </TableCell>
                           </TableRow>
                         ))
