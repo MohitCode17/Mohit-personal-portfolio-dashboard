@@ -159,7 +159,6 @@ export const updateSkill = (id, proficiency) => async (dispatch) => {
       }
     );
 
-    console.log(data);
     dispatch(skillSlice.actions.updateSkillSuccess(data.message));
     dispatch(skillSlice.actions.clearAllErrors());
   } catch (error) {

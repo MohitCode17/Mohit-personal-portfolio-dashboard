@@ -55,6 +55,11 @@ const Dashboard = () => {
     navigateTo("/manage/timelines");
   };
 
+  // REDIRECT TO MANAGE SKILL
+  const gotoManageSkill = () => {
+    navigateTo("/manage/skills");
+  };
+
   useEffect(() => {
     if (softwareError) {
       toast.error(softwareError);
@@ -105,7 +110,7 @@ const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardFooter>
-                <Button>Manage Skills</Button>
+                <Button onClick={gotoManageSkill}>Manage Skills</Button>
               </CardFooter>
             </Card>
           </div>
