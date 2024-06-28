@@ -60,6 +60,11 @@ const Dashboard = () => {
     navigateTo("/manage/skills");
   };
 
+  // REDIRECT TO MANAGE PROJECT
+  const gotoManageProject = () => {
+    navigateTo("/manage/projects");
+  };
+
   useEffect(() => {
     if (softwareError) {
       toast.error(softwareError);
@@ -98,7 +103,7 @@ const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardFooter>
-                <Button>Manage Projects</Button>
+                <Button onClick={gotoManageProject}>Manage Projects</Button>
               </CardFooter>
             </Card>
 
