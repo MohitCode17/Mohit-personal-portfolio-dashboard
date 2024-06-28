@@ -98,9 +98,7 @@ export const deleteTimeline = (id) => async (dispatch) => {
       { withCredentials: true }
     );
 
-    console.log(data);
-    dispatch(timelineSlice.actions.deleteTimelineSuccess(data.message));
-
+    dispatch(timelineSlice.actions.deleteTimelineSuccess(data.messages));
     dispatch(timelineSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(

@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Progress } from "../ui/progress";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   clearAllSoftwareErrors,
@@ -41,12 +41,18 @@ const Dashboard = () => {
   } = useSelector((state) => state.software);
   const { timeline } = useSelector((state) => state.timeline);
   const dispatch = useDispatch();
+  const navigateTo = useNavigate();
   const [softwareId, setSoftwareId] = useState(null);
 
   // HANDLE DELETE SOFTWARE
   const handleDeleteSoftware = (id) => {
     setSoftwareId(id);
     dispatch(deleteSoftware(id));
+  };
+
+  // REDIRECT TO MANAGE TIMELINE
+  const gotoManageTimeline = () => {
+    navigateTo("/manage/timelines");
   };
 
   useEffect(() => {
@@ -261,7 +267,9 @@ const Dashboard = () => {
               <Card>
                 <CardHeader className="px-7 flex items-center justify-between flex-row">
                   <CardTitle>Timeline</CardTitle>
-                  <Button className="w-fit">Manage Timeline</Button>
+                  <Button onClick={gotoManageTimeline} className="w-fit">
+                    Manage Timeline
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -296,8 +304,8 @@ const Dashboard = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">
-                            You have not added any timeline.
+                          <TableCell className="text-lg overflow-y-hidden text-gray-400">
+                            No Timeline Added!!
                           </TableCell>
                         </TableRow>
                       )}

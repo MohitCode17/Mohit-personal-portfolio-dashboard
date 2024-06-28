@@ -33,7 +33,7 @@ import ManageAccount from "@/components/sub-components/ManageAccount";
 
 const HomePage = () => {
   const { user, error, isAuthenticated } = useSelector((state) => state.user);
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState("Dashboard");
 
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
