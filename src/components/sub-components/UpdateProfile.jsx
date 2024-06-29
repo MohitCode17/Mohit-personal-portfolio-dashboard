@@ -8,6 +8,8 @@ import LoadingButton from "./LoadingButton";
 import { Button } from "../ui/button";
 import { getUser, resetProfile, updateProfile } from "@/store/slices/userSlice";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const UpdateProfile = () => {
   const { user, loading, isUpdated, error, message } = useSelector(
@@ -181,9 +183,20 @@ const UpdateProfile = () => {
               </div>
               <div className="grid gap-2">
                 <Label>About Me</Label>
-                <Textarea
+                {/* <Textarea
                   value={aboutMe}
                   onChange={(e) => setAboutMe(e.target.value)}
+                /> */}
+
+                <ReactQuill
+                  theme="snow"
+                  placeholder="Write about you something..."
+                  className="h-72 mb-12"
+                  required
+                  onChange={(value) => {
+                    setAboutMe(value);
+                  }}
+                  value={aboutMe}
                 />
               </div>
               <div className="grid gap-2">

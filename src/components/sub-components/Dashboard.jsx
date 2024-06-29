@@ -86,13 +86,9 @@ const Dashboard = () => {
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <Card className="sm:col-span-2">
               <CardHeader className="pb-3">
-                <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  {user.aboutMe}
+                <CardDescription className="max-w-lg text-balance leading-relaxed" dangerouslySetInnerHTML={{ __html: user && user.aboutMe }}>
                 </CardDescription>
               </CardHeader>
-              <CardFooter>
-                <Button>Visit Portfolio</Button>
-              </CardFooter>
             </Card>
 
             <Card className="flex flex-col justify-center">

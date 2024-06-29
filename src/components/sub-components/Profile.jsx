@@ -53,7 +53,7 @@ const Profile = () => {
               </div>
               <div className="grid gap-2">
                 <Label>About Me</Label>
-                <Textarea defaultValue={user.aboutMe} disabled />
+                <div className="text-sm bg-white/75 p-2 rounded-sm text-slate-400 cursor-not-allowed" dangerouslySetInnerHTML={{ __html: user && user.aboutMe }}></div>
               </div>
               <div className="grid gap-2">
                 <Label>Github URL</Label>
