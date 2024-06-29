@@ -166,6 +166,7 @@ const Dashboard = () => {
                                     ? `${element.projectLink}`
                                     : ""
                                 }
+                                target="_blank"
                               >
                                 <Button>Visit</Button>
                               </Link>

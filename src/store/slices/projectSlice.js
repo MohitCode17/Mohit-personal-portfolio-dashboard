@@ -154,7 +154,7 @@ export const updateProject = (id, updatedData) => async (dispatch) => {
   try {
     const { data } = await axios.put(
       `http://localhost:8000/api/v1/project/update/${id}`,
-      { updatedData },
+      updatedData,
       {
         withCredentials: true,
         headers: {
