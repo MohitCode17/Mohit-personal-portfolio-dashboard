@@ -183,11 +183,6 @@ const UpdateProfile = () => {
               </div>
               <div className="grid gap-2">
                 <Label>About Me</Label>
-                {/* <Textarea
-                  value={aboutMe}
-                  onChange={(e) => setAboutMe(e.target.value)}
-                /> */}
-
                 <ReactQuill
                   theme="snow"
                   placeholder="Write about you something..."
