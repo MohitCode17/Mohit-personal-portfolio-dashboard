@@ -20,6 +20,7 @@ const UpdateProfile = () => {
   const [fullName, setFullName] = useState(user && user.fullName);
   const [email, setEmail] = useState(user && user.email);
   const [phone, setPhone] = useState(user && user.phone);
+  const [intro, setIntro] = useState(user && user.intro);
   const [aboutMe, setAboutMe] = useState(user && user.aboutMe);
   const [githubUrl, setGithubUrl] = useState(
     user && (user.githubUrl === "undefined" ? "" : user.githubUrl)
@@ -73,6 +74,7 @@ const UpdateProfile = () => {
     formData.append("fullName", fullName);
     formData.append("email", email);
     formData.append("phone", phone);
+    formData.append("intro", intro);
     formData.append("aboutMe", aboutMe);
     formData.append("githubUrl", githubUrl);
     formData.append("linkedinUrl", linkedinUrl);
@@ -179,6 +181,19 @@ const UpdateProfile = () => {
                   value={phone}
                   placeholder="Your Phone Number"
                   onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label>Short Intro (For Hero Page)</Label>
+                <ReactQuill
+                  theme="snow"
+                  placeholder="Write about you something..."
+                  className="h-32 mb-12"
+                  required
+                  onChange={(value) => {
+                    setIntro(value);
+                  }}
+                  value={intro}
                 />
               </div>
               <div className="grid gap-2">
