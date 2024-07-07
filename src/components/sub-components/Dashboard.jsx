@@ -86,8 +86,10 @@ const Dashboard = () => {
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <Card className="sm:col-span-2">
               <CardHeader className="pb-3">
-                <CardDescription className="max-w-lg text-balance leading-relaxed" dangerouslySetInnerHTML={{ __html: user && user.aboutMe }}>
-                </CardDescription>
+                <CardDescription
+                  className="max-w-lg text-balance leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: user && user.aboutMe }}
+                ></CardDescription>
               </CardHeader>
             </Card>
 
@@ -171,8 +173,8 @@ const Dashboard = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">
-                            You have not added any project.
+                          <TableCell className="text-lg overflow-y-hidden text-gray-400">
+                            No Project Added!!
                           </TableCell>
                         </TableRow>
                       )}
@@ -200,7 +202,9 @@ const Dashboard = () => {
                       </Card>
                     ))
                   ) : (
-                    <p className="text-3xl">You have not added any skill.</p>
+                    <p className="text-lg overflow-y-hidden text-gray-400">
+                      No Skills Added!!
+                    </p>
                   )}
                 </CardContent>
               </Card>
@@ -261,8 +265,8 @@ const Dashboard = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">
-                            You have not added any software.
+                          <TableCell className="text-lg overflow-y-hidden text-gray-400">
+                            No Software Added!!
                           </TableCell>
                         </TableRow>
                       )}
