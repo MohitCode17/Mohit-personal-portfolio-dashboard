@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 import Profile from "./Profile";
 import UpdateProfile from "./UpdateProfile";
 import UpdatePassword from "./UpdatePassword";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/store/slices/userSlice";
 
 const ManageAccount = () => {
   const [activeComponent, setActiveComponent] = useState("Profile");
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
@@ -46,6 +54,8 @@ const ManageAccount = () => {
             >
               Update Password
             </Link>
+
+            <Link onClick={handleLogout}>Logout</Link>
           </nav>
           <div className="grid gap-6">
             {(() => {
