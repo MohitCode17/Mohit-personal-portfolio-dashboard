@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Label } from "../ui/label";
 import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import { useEffect, useState } from "react";
 import LoadingButton from "./LoadingButton";
 import { Button } from "../ui/button";

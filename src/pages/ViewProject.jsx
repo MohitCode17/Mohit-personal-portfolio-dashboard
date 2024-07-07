@@ -71,20 +71,22 @@ const ViewProject = () => {
 
               <div className="w-full sm:col-span-4">
                 <p className="text-2xl mb-2">Description:</p>
-                <ul className="list-disc">
-                  {descriptionList.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+                <div
+                  className="text-base p-2 text-black"
+                  dangerouslySetInnerHTML={{
+                    __html: description && description,
+                  }}
+                ></div>
               </div>
 
               <div className="w-full sm:col-span-4">
                 <p className="text-2xl mb-2">Technologies:</p>
-                <ul className="list-disc">
-                  {technologiesList.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+                <div
+                  className="text-base p-2 text-black"
+                  dangerouslySetInnerHTML={{
+                    __html: technologies && technologies,
+                  }}
+                ></div>
               </div>
 
               <div className="w-full sm:col-span-4">
@@ -110,7 +112,6 @@ const ViewProject = () => {
                   {projectLink}
                 </Link>
               </div>
-
             </div>
           </div>
         </div>

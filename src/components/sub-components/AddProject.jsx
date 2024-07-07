@@ -17,6 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const AddProject = () => {
   const [title, setTitle] = useState("");
@@ -102,15 +104,17 @@ const AddProject = () => {
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Project Description
                 </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm border border-gray-500">
-                    <Textarea
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="feature 1. feature 2. feature 3."
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </div>
+                <div className="grid gap-2">
+                  <ReactQuill
+                    theme="snow"
+                    placeholder="Description of your project"
+                    className="h-60 mb-12"
+                    required
+                    onChange={(value) => {
+                      setDescription(value);
+                    }}
+                    value={description}
+                  />
                 </div>
               </div>
 
@@ -118,7 +122,19 @@ const AddProject = () => {
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Technologies Used
                 </label>
-                <div className="mt-2">
+                <div className="grid gap-2">
+                  <ReactQuill
+                    theme="snow"
+                    placeholder="Technologies used in this project"
+                    className="h-40 mb-12"
+                    required
+                    onChange={(value) => {
+                      setTechnologies(value);
+                    }}
+                    value={technologies}
+                  />
+                </div>
+                {/* <div className="mt-2">
                   <div className="flex rounded-md shadow-sm border border-gray-500">
                     <Textarea
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -127,7 +143,7 @@ const AddProject = () => {
                       onChange={(e) => setTechnologies(e.target.value)}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="w-full sm:col-span-4">
