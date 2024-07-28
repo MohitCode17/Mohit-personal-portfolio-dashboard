@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "../ui/button";
 import LoadingButton from "./LoadingButton";
-import { Textarea } from "../ui/textarea";
 import {
   Select,
   SelectContent,
@@ -25,11 +24,12 @@ const AddProject = () => {
   const [description, setDescription] = useState("");
   const [gitRepoLink, setGitRepoLink] = useState("");
   const [projectLink, setProjectLink] = useState("");
-  const [technologies, setTechnologies] = useState("");
   const [stack, setStack] = useState("");
   const [deployed, setDeployed] = useState("");
   const [projectBanner, setProjectBanner] = useState("");
   const [projectBannerPreview, setProjectBannerPreview] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
 
   const { loading, error, message } = useSelector((state) => state.project);
   const dispatch = useDispatch();
@@ -44,6 +44,19 @@ const AddProject = () => {
     };
   };
 
+  // Handle add tags
+  const handleAddTag = () => {
+    if (tagInput && !tags.includes(tagInput)) {
+      setTags([...tags, tagInput]);
+      setTagInput("");
+    }
+  };
+
+  // Handle tag remove
+  const handleRemoveTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
   const handleAddProject = (e) => {
     e.preventDefault();
 
@@ -52,10 +65,10 @@ const AddProject = () => {
     formData.append("description", description);
     formData.append("gitRepoLink", gitRepoLink);
     formData.append("projectLink", projectLink);
-    formData.append("technologies", technologies);
     formData.append("stack", stack);
     formData.append("deployed", deployed);
     formData.append("projectBanner", projectBanner);
+    formData.append("tags", JSON.stringify(tags));
 
     dispatch(addNewProject(formData));
   };
@@ -120,30 +133,37 @@ const AddProject = () => {
 
               <div className="w-full sm:col-span-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Technologies Used
+                  Tags
                 </label>
-                <div className="grid gap-2">
-                  <ReactQuill
-                    theme="snow"
-                    placeholder="Technologies used in this project"
-                    className="h-40 mb-12"
-                    required
-                    onChange={(value) => {
-                      setTechnologies(value);
-                    }}
-                    value={technologies}
+                <div className="mt-2 flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="block flex-1 border border-gray-500 rounded-md py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Add a tag"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
                   />
+                  <Button type="button" onClick={handleAddTag}>
+                    Add Tag
+                  </Button>
                 </div>
-                {/* <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm border border-gray-500">
-                    <Textarea
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="HTML, CSS, Node.js, React, Express"
-                      value={technologies}
-                      onChange={(e) => setTechnologies(e.target.value)}
-                    />
-                  </div>
-                </div> */}
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {tags.map((tag, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-md"
+                    >
+                      <span>{tag}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(tag)}
+                        className="text-red-500"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="w-full sm:col-span-4">
