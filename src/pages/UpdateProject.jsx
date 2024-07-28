@@ -17,19 +17,20 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const UpdateProject = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [technologies, setTechnologies] = useState("");
   const [stack, setStack] = useState("");
   const [gitRepoLink, setGitRepoLink] = useState("");
   const [deployed, setDeployed] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [projectBanner, setProjectBanner] = useState("");
   const [projectBannerPreview, setProjectBannerPreview] = useState("");
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
 
   const { error, loading, projects, message } = useSelector(
     (state) => state.project
@@ -55,7 +56,6 @@ const UpdateProject = () => {
         setDescription(data.project.description);
         setStack(data.project.stack);
         setDeployed(data.project.deployed);
-        setTechnologies(data.project.technologies);
         setGitRepoLink(data.project.gitRepoLink);
         setProjectLink(data.project.projectLink);
         setProjectBanner(
@@ -64,6 +64,7 @@ const UpdateProject = () => {
         setProjectBannerPreview(
           data.project.projectBanner && data.project.projectBanner.url
         );
+        setTags(data.project.tags || []);
       } catch (error) {
         toast.error(error.response.data.message);
       }
@@ -93,6 +94,19 @@ const UpdateProject = () => {
     };
   };
 
+  // HANDLE ADD TAG
+  const handleAddTag = () => {
+    if (newTag && !tags.includes(newTag)) {
+      setTags([...tags, newTag]);
+      setNewTag("");
+    }
+  };
+
+  // HANDLE REMOVE TAG
+  const handleRemoveTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
   // HANDLE UPDATE PROJECT
   const handleUpdateProject = (e) => {
     e.preventDefault();
@@ -102,10 +116,10 @@ const UpdateProject = () => {
     formData.append("description", description);
     formData.append("gitRepoLink", gitRepoLink);
     formData.append("projectLink", projectLink);
-    formData.append("technologies", technologies);
     formData.append("stack", stack);
     formData.append("deployed", deployed);
     formData.append("projectBanner", projectBanner);
+    formData.append("tags", JSON.stringify(tags)); // Include tags in the form data
 
     dispatch(updateProject(id, formData));
   };
@@ -176,16 +190,34 @@ const UpdateProject = () => {
 
               <div className="w-full sm:col-span-4">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Technologies Used
+                  Tags
                 </label>
                 <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm border border-gray-500">
-                    <Textarea
+                  <div className="flex rounded-md shadow-sm border border-gray-500 flex-wrap">
+                    {tags.map((tag, index) => (
+                      <div key={index} className="tag-item">
+                        {tag}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveTag(tag)}
+                          className="ml-2"
+                        >
+                          x
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2 flex">
+                    <input
+                      type="text"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="HTML, CSS, Node.js, React, Express"
-                      value={technologies}
-                      onChange={(e) => setTechnologies(e.target.value)}
+                      placeholder="Add a tag"
+                      value={newTag}
+                      onChange={(e) => setNewTag(e.target.value)}
                     />
+                    <Button onClick={handleAddTag} className="ml-2">
+                      Add Tag
+                    </Button>
                   </div>
                 </div>
               </div>
