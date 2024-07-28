@@ -62,7 +62,7 @@ const ManageProjects = () => {
         <TabsContent value="week">
           <Card>
             <CardHeader className="flex gap-4 sm:justify-between sm:flex-row sm:items-center">
-              <CardTitle>Manage Your Timeline</CardTitle>
+              <CardTitle>Manage Your Projects</CardTitle>
               <Button className="w-fit" onClick={handleReturnToDashboard}>
                 Return to Dashboard
               </Button>

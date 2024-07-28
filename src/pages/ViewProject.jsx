@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 const ViewProject = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [technologies, setTechnologies] = useState("");
   const [stack, setStack] = useState("");
   const [gitRepoLink, setGitRepoLink] = useState("");
   const [deployed, setDeployed] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [projectBanner, setProjectBanner] = useState("");
+  const [tags, setTags] = useState([]);
 
   const navigateTo = useNavigate();
   const { id } = useParams();
@@ -28,25 +28,23 @@ const ViewProject = () => {
           `http://localhost:8000/api/v1/project/get/${id}`,
           { withCredentials: true }
         );
-        setTitle(data.project.title);
-        setDescription(data.project.description);
-        setStack(data.project.stack);
-        setDeployed(data.project.deployed);
-        setTechnologies(data.project.technologies);
-        setGitRepoLink(data.project.gitRepoLink);
-        setProjectLink(data.project.projectLink);
+        console.log(data);
+        setTitle(data?.project.title);
+        setDescription(data?.project.description);
+        setStack(data?.project.stack);
+        setDeployed(data?.project.deployed);
+        setGitRepoLink(data?.project.gitRepoLink);
+        setProjectLink(data?.project.projectLink);
         setProjectBanner(
-          data.project.projectBanner && data.project.projectBanner.url
+          data?.project.projectBanner && data?.project.projectBanner.url
         );
+        setTags(data?.project.tags || []); // Set tags from the fetched data
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(error.message);
       }
     };
     getProject();
   }, [id]);
-
-  let descriptionList = description.split(".");
-  let technologiesList = technologies.split(",");
 
   return (
     <div className="flex mt-7 justify-center items-center min-h-[100vh] sm:gap-4 sm:py-4">
@@ -80,13 +78,17 @@ const ViewProject = () => {
               </div>
 
               <div className="w-full sm:col-span-4">
-                <p className="text-2xl mb-2">Technologies:</p>
-                <div
-                  className="text-base p-2 text-black"
-                  dangerouslySetInnerHTML={{
-                    __html: technologies && technologies,
-                  }}
-                ></div>
+                <p className="text-2xl mb-2">Tags:</p>
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-200 text-gray-700 px-2 py-1 rounded-lg text-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               <div className="w-full sm:col-span-4">
