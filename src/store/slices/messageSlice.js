@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/util/service";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -59,7 +60,7 @@ export const getAllMessages = () => async (dispatch) => {
   dispatch(messageSlice.actions.getAllMessagesRequest());
 
   try {
-    const { data } = await axios.get("http://localhost:8000/api/v1/message", {
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/message`, {
       withCredentials: true,
     });
 
@@ -78,7 +79,7 @@ export const deleteMessage = (id) => async (dispatch) => {
 
   try {
     const { data } = await axios.delete(
-      `http://localhost:8000/api/v1/message/delete/${id}`,
+      `${BACKEND_URL}/api/v1/message/delete/${id}`,
       { withCredentials: true }
     );
 

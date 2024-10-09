@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/util/service";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -115,7 +116,7 @@ export const login = (email, password) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
     const { data } = await axios.post(
-      "http://localhost:8000/api/v1/user/login",
+      `${BACKEND_URL}/api/v1/user/login`,
       { email, password },
       {
         withCredentials: true,
@@ -134,7 +135,7 @@ export const login = (email, password) => async (dispatch) => {
 export const getUser = () => async (dispatch) => {
   dispatch(userSlice.actions.getUserRequest());
   try {
-    const { data } = await axios.get("http://localhost:8000/api/v1/user/me", {
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
       withCredentials: true,
     });
     dispatch(userSlice.actions.getUserSuccess(data.user));
@@ -147,10 +148,9 @@ export const getUser = () => async (dispatch) => {
 // LOGOUT USER REQUEST
 export const logout = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(
-      "http://localhost:8000/api/v1/user/logout",
-      { withCredentials: true }
-    );
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/user/logout`, {
+      withCredentials: true,
+    });
     dispatch(userSlice.actions.logoutSuccess(data.message));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
@@ -164,7 +164,7 @@ export const updateProfile = (updatedData) => async (dispatch) => {
 
   try {
     const { data } = await axios.put(
-      "http://localhost:8000/api/v1/user/me/profile/update",
+      `${BACKEND_URL}/api/v1/user/me/profile/update`,
       updatedData,
       {
         withCredentials: true,
@@ -189,7 +189,7 @@ export const updatePassword =
 
     try {
       const { data } = await axios.put(
-        "http://localhost:8000/api/v1/user/password/update",
+        `${BACKEND_URL}/api/v1/user/password/update`,
         { currentPassword, newPassword, confirmPassword },
         {
           withCredentials: true,

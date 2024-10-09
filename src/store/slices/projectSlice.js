@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/util/service";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -89,10 +90,9 @@ export const getAllProjects = () => async (dispatch) => {
   dispatch(projectSlice.actions.getAllProjectRequest());
 
   try {
-    const { data } = await axios.get(
-      "http://localhost:8000/api/v1/project/getall",
-      { withCredentials: true }
-    );
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/project/getall`, {
+      withCredentials: true,
+    });
 
     dispatch(projectSlice.actions.getAllProjectSuccess(data.projects));
     dispatch(projectSlice.actions.clearAllErrors());
@@ -109,7 +109,7 @@ export const deleteProject = (id) => async (dispatch) => {
 
   try {
     const { data } = await axios.delete(
-      `http://localhost:8000/api/v1/project/delete/${id}`,
+      `${BACKEND_URL}/api/v1/project/delete/${id}`,
       { withCredentials: true }
     );
 
@@ -128,7 +128,7 @@ export const addNewProject = (projectData) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:8000/api/v1/project/add",
+      `${BACKEND_URL}/api/v1/project/add`,
       projectData,
       {
         withCredentials: true,
@@ -153,7 +153,7 @@ export const updateProject = (id, updatedData) => async (dispatch) => {
 
   try {
     const { data } = await axios.put(
-      `http://localhost:8000/api/v1/project/update/${id}`,
+      `${BACKEND_URL}/api/v1/project/update/${id}`,
       updatedData,
       {
         withCredentials: true,

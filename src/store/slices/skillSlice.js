@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/util/service";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -88,10 +89,9 @@ export const getAllSkills = () => async (dispatch) => {
   dispatch(skillSlice.actions.getAllSkillRequest());
 
   try {
-    const { data } = await axios.get(
-      "http://localhost:8000/api/v1/skill/getall",
-      { withCredentials: true }
-    );
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/skill/getall`, {
+      withCredentials: true,
+    });
 
     dispatch(skillSlice.actions.getAllSkillSuccess(data.skills));
     dispatch(skillSlice.actions.clearAllErrors());
@@ -106,7 +106,7 @@ export const deleteSkill = (id) => async (dispatch) => {
 
   try {
     const { data } = await axios.delete(
-      `http://localhost:8000/api/v1/skill/delete/${id}`,
+      `${BACKEND_URL}/api/v1/skill/delete/${id}`,
       { withCredentials: true }
     );
 
@@ -125,7 +125,7 @@ export const addNewSkill = (skillData) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:8000/api/v1/skill/add",
+      `${BACKEND_URL}/api/v1/skill/add`,
       skillData,
       {
         withCredentials: true,
@@ -149,7 +149,7 @@ export const updateSkill = (id, proficiency) => async (dispatch) => {
 
   try {
     const { data } = await axios.put(
-      `http://localhost:8000/api/v1/skill/update/${id}`,
+      `${BACKEND_URL}/api/v1/skill/update/${id}`,
       { proficiency },
       {
         withCredentials: true,

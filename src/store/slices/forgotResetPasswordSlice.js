@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/util/service";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -53,7 +54,7 @@ export const forgotPassword = (email) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:8000/api/v1/user/password/forgot",
+      `${BACKEND_URL}/api/v1/user/password/forgot`,
       { email },
       {
         withCredentials: true,
@@ -84,7 +85,7 @@ export const resetPassword =
 
     try {
       const { data } = await axios.put(
-        `http://localhost:8000/api/v1/user/password/reset/${token}`,
+        `${BACKEND_URL}/api/v1/user/password/reset/${token}`,
         { password, confirmPassword },
         {
           withCredentials: true,

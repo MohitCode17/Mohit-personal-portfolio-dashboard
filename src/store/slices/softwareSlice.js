@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "@/util/service";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -73,10 +74,9 @@ export const getAllSoftwares = () => async (dispatch) => {
   dispatch(softwareSlice.actions.getAllSoftwareRequest());
 
   try {
-    const { data } = await axios.get(
-      "http://localhost:8000/api/v1/software/getall",
-      { withCredentials: true }
-    );
+    const { data } = await axios.get(`${BACKEND_URL}/api/v1/software/getall`, {
+      withCredentials: true,
+    });
 
     dispatch(softwareSlice.actions.getAllSoftwareSuccess(data.softwares));
     dispatch(softwareSlice.actions.clearAllErrors());
@@ -93,11 +93,10 @@ export const deleteSoftware = (id) => async (dispatch) => {
 
   try {
     const { data } = await axios.delete(
-      `http://localhost:8000/api/v1/software/delete/${id}`,
+      `${BACKEND_URL}/api/v1/software/delete/${id}`,
       { withCredentials: true }
     );
 
-    console.log(data);
     dispatch(softwareSlice.actions.deleteSoftwareSuccess(data.message));
     dispatch(softwareSlice.actions.clearAllErrors());
   } catch (error) {
@@ -113,7 +112,7 @@ export const addNewSoftware = (softwareData) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:8000/api/v1/software/add",
+      `${BACKEND_URL}/api/v1/software/add`,
       softwareData,
       {
         withCredentials: true,
